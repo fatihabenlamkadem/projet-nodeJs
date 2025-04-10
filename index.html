@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="/style.css">
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes App (Node.js Only)</title>
+</head>
+<body>
+  <h1>Notes</h1>
+  <form method="POST" action="/add">
+    <input type="text" name="title" placeholder="Titre" required><br><br>
+    <textarea name="content" placeholder="Contenu" required></textarea><br><br>
+    <button type="submit">Ajouter</button>
+  </form>
+
+  <hr>
+  <h2>Liste des notes :</h2>
+  <div id="notes">
+    <!-- Les notes seront affichées ici -->
+  </div>
+
+  <script>
+    fetch("/notes")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("notes");
+        container.innerHTML = data.map(n =>
+          `<div><strong>${n.title}</strong><p>${n.content}</p><hr></div>`
+        ).join('');
+      });
+  </script>
+</body>
+</html>
